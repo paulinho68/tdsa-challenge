@@ -2,16 +2,16 @@ import logo from '../../assets/tdsa_logotipo.png';
 import * as Styles from './styles';
 
 interface Props {
-    onOpenNewTransactionModal: () => void;
+    onOpenNewModal: () => void;
 }
 
-export function Header({ onOpenNewTransactionModal }: Props) {
+export function Header({ onOpenNewModal }: Props) {
 
     return (
         <Styles.Container>
             <Styles.Content>
                 <img src={logo} alt="dt money" />
-                <button type="button" onClick={onOpenNewTransactionModal}>
+                <button type="button" onClick={onOpenNewModal}>
                     Novo Post
                 </button>
             </Styles.Content>

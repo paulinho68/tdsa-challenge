@@ -8,12 +8,12 @@ interface Props {
     onRequestClose: () => void;
 }
 
-export function NewTransactionModal({ isOpen, onRequestClose }: Props) {
+export function NewModal({ isOpen, onRequestClose }: Props) {
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState(0);
     const [category, setCategory] = useState('');
 
-    async function handleCreateNewTransaction(e: FormEvent) {
+    async function handleCreate(e: FormEvent) {
         e.preventDefault();
 
         setTitle('');
@@ -33,7 +33,7 @@ export function NewTransactionModal({ isOpen, onRequestClose }: Props) {
             <button type="button" onClick={onRequestClose} className="react-modal-close">
                 <img src={closeImg} alt="Fechar Modal" />
             </button>
-            <Styles.Container onSubmit={(e) => handleCreateNewTransaction(e)}>
+            <Styles.Container onSubmit={(e) => handleCreate(e)}>
                 <h2>Cadastrar Transação</h2>
                 <input
                     type="text"

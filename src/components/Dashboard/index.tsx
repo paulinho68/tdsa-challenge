@@ -1,10 +1,10 @@
 import * as Styles from './styles';
-import { TransactionsTable } from '../TransactionsTable';
+import { TableComponent } from '../Table';
 
 export function Dashboard() {
     return (
         <Styles.Container>
-            <TransactionsTable />
+            <TableComponent />
         </Styles.Container>
     )
 }
