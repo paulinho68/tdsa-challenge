@@ -5,6 +5,7 @@ import { GlobalStyle } from './styles/global';
 import { useState } from 'react';
 
 import Modal from 'react-modal';
+import { PostsProvider } from './hooks/usePosts';
 
 Modal.setAppElement('#root');
 
@@ -21,11 +22,11 @@ export function App() {
   }
 
   return (
-    <>
+    <PostsProvider>
       <Header onOpenNewModal={handleOpenNewModal} />
       <Dashboard />
       <NewModal isOpen={isNewModalOpen} onRequestClose={handleCloseNewModal} />
       <GlobalStyle />
-    </>
+    </PostsProvider>
   );
 }

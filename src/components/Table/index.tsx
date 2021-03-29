@@ -12,14 +12,16 @@ import {
     TableHead,
     TableRow,
     Paper,
-    makeStyles
+    makeStyles,
+    TablePagination
 } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { usePosts } from '../../hooks/usePosts';
 
 const useStyles = makeStyles({
     table: {
-        minWidth: 400,
+        minWidth: 100,
     },
 });
 
@@ -31,22 +33,48 @@ interface DataProps {
 }
 
 export function TableComponent() {
+    const [rows, setRows] = useState<DataProps[] | []>([]);
     const classes = useStyles();
-    const [data, setData] = useState<DataProps[]>([]);
+    const { data } = usePosts();
     const [open, setOpen] = useState(false);
     const [postOpenId, setPostOpenId] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = useState(0);
+
+    const ChangeRowsPerPage = (min: number, max: number) => {
+        const newData: DataProps[] = [];
+        if (!!data) {
+            for (let i = min; i <= max; i++) {
+                if (!!data[i - 1]) {
+                    newData.push(data[i - 1]);
+                }
+            }
+
+            setRows(newData);
+        }
+    }
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        const min = rowsPerPage * newPage + 1;
+        const max = rowsPerPage * (newPage + 1);
+
+        setPage(newPage);
+        ChangeRowsPerPage(min, max);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        ChangeRowsPerPage(0, parseInt(event.target.value));
+        setPage(0);
+    };
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => response.json())
-            .then(json => {
-                setData(json);
-            })
-    }, []);
+        ChangeRowsPerPage(0, rowsPerPage);
+    }, [data]);
 
     return (
         <Styles.Container>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} >
                 <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
@@ -56,7 +84,7 @@ export function TableComponent() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map((row) => (
+                        {rows && rows.map((row: DataProps) => (
                             <React.Fragment key={row.id}>
                                 <TableRow>
                                     <TableCell component="th" scope="row">
@@ -76,13 +104,19 @@ export function TableComponent() {
                                         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                                             <Collapse in={open} timeout="auto">
                                                 <Box margin={1}>
-                                                    <Typography variant="h6" gutterBottom component="div">Content</Typography>
                                                     <Table size="small" aria-label="purchases">
                                                         <TableBody>
                                                             <TableRow key={row.id}>
-                                                                <TableCell align="right">
+                                                                <Styles.SubColumn colSpan={4}>
+                                                                    <Typography variant="h6" gutterBottom component="div">#{row.id} {row.title}</Typography>
                                                                     {row.body}
-                                                                </TableCell>
+                                                                </Styles.SubColumn>
+                                                                <Styles.SubColumn>
+                                                                    <div>
+                                                                        <button onClick={() => console.log(row.id)}>Editar</button>
+                                                                        <button onClick={() => console.log(row.id)}>Excluir</button>
+                                                                    </div>
+                                                                </Styles.SubColumn>
                                                             </TableRow>
                                                         </TableBody>
                                                     </Table>
@@ -95,6 +129,15 @@ export function TableComponent() {
                         ))}
                     </TableBody>
                 </Table>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={data.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
             </TableContainer>
         </Styles.Container>
     )
