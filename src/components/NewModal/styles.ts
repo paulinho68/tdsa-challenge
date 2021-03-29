@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.form`
+export const Container = styled.div`
     h2{
         color: var(--text-title);
         font-size: 1.5rem;
@@ -28,22 +28,37 @@ export const Container = styled.form`
         }
     }
 
-    button[type="submit"]{
-        width: 100%;
-        padding: 0 1.5rem;
-        height: 4rem;
-        background: var(--green);
-        color: #FFF;
-        border-radius: 0.25rem;
-        border:0;
-        font-size:1rem;
-        font-weight:600;
-        margin-top: 1rem;
+    footer{
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0.25rem;
 
-        transition: filter 0.2s;
+        button[type="submit"]{
+            width: 100%;
+            padding: 0.25rem 1rem;
+            color: #FFF;
+            border-radius: 0.25rem;
+            border:0;
+            font-size:1rem;
+            font-weight:600;
+            margin-top: 3rem;
 
-        &:hover{
-            filter: brightness(0.9);
+            transition: filter 0.2s;
+
+            &:hover{
+                filter: brightness(0.9);
+            }
+
+            &.close{
+                background: var(--red);
+            }
+            &.save{
+                background: var(--green);
+            }
+            &.save_continue{
+                background: var(--blue-light);
+            }
         }
     }
+
 `;

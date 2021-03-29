@@ -2,7 +2,7 @@ import logo from '../../assets/tdsa_logotipo.png';
 import * as Styles from './styles';
 
 interface Props {
-    onOpenNewModal: () => void;
+    onOpenNewModal: (type: 'create' | 'edit') => void;
 }
 
 export function Header({ onOpenNewModal }: Props) {
@@ -11,8 +11,8 @@ export function Header({ onOpenNewModal }: Props) {
         <Styles.Container>
             <Styles.Content>
                 <img src={logo} alt="dt money" />
-                <button type="button" onClick={onOpenNewModal}>
-                    Novo Post
+                <button type="button" onClick={() => onOpenNewModal('create')}>
+                    New Post
                 </button>
             </Styles.Content>
         </Styles.Container>

@@ -70,7 +70,7 @@ export function TableComponent() {
 
     useEffect(() => {
         ChangeRowsPerPage(0, rowsPerPage);
-    }, [data]);
+    }, [data, rowsPerPage]);
 
     return (
         <Styles.Container>
