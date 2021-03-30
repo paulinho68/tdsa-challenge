@@ -6,7 +6,6 @@ import {
 } from 'formik';
 
 import { usePosts } from '../../hooks/usePosts';
-import { useEffect, useState } from 'react';
 
 interface Props {
     continueWithModalOpen: boolean;
