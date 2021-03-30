@@ -24,6 +24,6 @@ O TDSA-Challange foi criado com **HTML/SCSS/JS**, onde foi usado às principais 
     - `npm run start` OR `yarn start`
 5. visitar a página http://localhost:3000/ no seu browser.
 
-![Application](https://raw.githubusercontent.com/paulinho68/tdsa-challenge/main/assets/print1.png)
+![Application](https://raw.githubusercontent.com/paulinho68/tdsa-challenge/master/prints/print1.png)
 
-![Application](https://raw.githubusercontent.com/paulinho68/tdsa-challenge/main/assets/print2.png)
+![Application](https://raw.githubusercontent.com/paulinho68/tdsa-challenge/master/prints/print2.png)
