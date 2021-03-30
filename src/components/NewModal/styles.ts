@@ -28,12 +28,31 @@ export const Container = styled.div`
         }
     }
 
+    div{
+        width:100%;
+        text-align:end;
+        margin-top: 2rem;
+
+        button{
+            background: var(--background);
+            border:none;
+            color:var(--text-title);
+            transition: color 0.2s;
+            cursor:pointer;
+
+            &:hover{
+                color:var(--text-body);
+            }
+        }
+
+    }
+
     footer{
         display:grid;
         grid-template-columns: 1fr 1fr 1fr;
         gap: 0.25rem;
 
-        button[type="submit"]{
+        button{
             width: 100%;
             padding: 0.25rem 1rem;
             color: #FFF;
@@ -61,4 +80,13 @@ export const Container = styled.div`
         }
     }
 
+`;
+
+export const Line = styled.div`
+    height: 1px;
+    width: 100%;
+    margin: 3rem auto 1.5rem auto; 
+    background: var(--text-body);
+    opacity: 0.6;
+    border-radius: 0.25rem;
 `;

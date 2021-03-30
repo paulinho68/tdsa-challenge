@@ -8,6 +8,14 @@ interface DataProps {
     body: string;
 }
 
+interface CommentProps {
+    postId: number;
+    id: number;
+    name: string;
+    email: string;
+    body: string;
+}
+
 interface PostsProviderProps {
     children: ReactNode;
 }
@@ -15,9 +23,11 @@ interface PostsProviderProps {
 interface PostContextData {
     data: DataProps[];
     createPost: (post: PostInput) => Promise<void>;
+    createComment: (comment: CommentInput) => Promise<void>;
 }
 
 type PostInput = Omit<DataProps, 'id' | 'userId'>;
+type CommentInput = Omit<CommentProps, 'id' | 'userId'>;
 
 const PostsContext = createContext<PostContextData>(
     {} as PostContextData
@@ -34,6 +44,7 @@ const Notify = (text: string, type: Noty.Type) => {
 
 export function PostsProvider({ children }: PostsProviderProps) {
     const [data, setData] = useState<DataProps[]>([]);
+    const [comments, setComments] = useState<CommentProps[]>([]);
 
     async function createPost(postInput: PostInput) {
 
@@ -46,15 +57,44 @@ export function PostsProvider({ children }: PostsProviderProps) {
             body: JSON.stringify(postInput)
         });
 
+        const newPost = {
+            ...postInput,
+            userId: 1,
+            id: data.length + 1
+        };
+
         if (response.status === 200 || response.status === 201) {
             Notify('Post saved successfully.', 'success');
             setData([
                 ...data,
-                {
-                    ...postInput,
-                    userId: 1,
-                    id: data.length + 1
-                }
+                newPost
+            ]);
+        } else {
+            Notify('Ops, should be have a problem with a server, please try again later.', 'error');
+        }
+    }
+
+    async function createComment(commentInput: CommentInput) {
+
+        const response = await fetch('https://jsonplaceholder.typicode.com/comments', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(commentInput)
+        });
+
+        const newComment = {
+            ...commentInput,
+            id: comments.length + 1
+        };
+
+        if (response.status === 200 || response.status === 201) {
+            Notify('Comment saved successfully.', 'success');
+            setComments([
+                ...comments,
+                newComment
             ]);
         } else {
             Notify('Ops, should be have a problem with a server, please try again later.', 'error');
@@ -70,7 +110,7 @@ export function PostsProvider({ children }: PostsProviderProps) {
     }, []);
 
     return (
-        <PostsContext.Provider value={{ data, createPost }}>
+        <PostsContext.Provider value={{ data, createPost, createComment }}>
             {children}
         </PostsContext.Provider>
     );

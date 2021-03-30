@@ -74,6 +74,8 @@ export const GlobalStyle = createGlobalStyle`
         padding: 3rem;
         position:relative;
         border-radius: 0.24rem;
+        max-height: 80vh;
+        overflow-y: auto;
     }
 
     .react-modal-close{
