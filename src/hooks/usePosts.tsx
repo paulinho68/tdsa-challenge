@@ -51,7 +51,7 @@ export function PostsProvider({ children }: PostsProviderProps) {
 
     async function createPost(postInput: PostInput) {
 
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -92,7 +92,7 @@ export function PostsProvider({ children }: PostsProviderProps) {
 
     async function createComment(commentInput: CommentInput) {
 
-        const response = await fetch('https://jsonplaceholder.typicode.com/comments', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/comments`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -124,7 +124,7 @@ export function PostsProvider({ children }: PostsProviderProps) {
     }
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
+        fetch(`${process.env.REACT_APP_API_URL}/posts`)
             .then(response => response.json())
             .then(json => {
                 setPosts(json);
