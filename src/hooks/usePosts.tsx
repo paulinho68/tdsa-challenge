@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import Noty from 'noty';
 
-interface DataProps {
+interface PostProps {
     userId: number;
     id: number;
     title: string;
@@ -21,12 +21,13 @@ interface PostsProviderProps {
 }
 
 interface PostContextData {
-    data: DataProps[];
+    posts: PostProps[];
+    comments: CommentProps[];
     createPost: (post: PostInput) => Promise<void>;
     createComment: (comment: CommentInput) => Promise<void>;
 }
 
-type PostInput = Omit<DataProps, 'id' | 'userId'>;
+type PostInput = Omit<PostProps, 'id' | 'userId'>;
 type CommentInput = Omit<CommentProps, 'id' | 'userId'>;
 
 const PostsContext = createContext<PostContextData>(
@@ -43,7 +44,7 @@ const Notify = (text: string, type: Noty.Type) => {
 }
 
 export function PostsProvider({ children }: PostsProviderProps) {
-    const [data, setData] = useState<DataProps[]>([]);
+    const [posts, setPosts] = useState<PostProps[]>([]);
     const [comments, setComments] = useState<CommentProps[]>([]);
 
     async function createPost(postInput: PostInput) {
@@ -60,13 +61,13 @@ export function PostsProvider({ children }: PostsProviderProps) {
         const newPost = {
             ...postInput,
             userId: 1,
-            id: data.length + 1
+            id: posts.length + 1
         };
 
         if (response.status === 200 || response.status === 201) {
             Notify('Post saved successfully.', 'success');
-            setData([
-                ...data,
+            setPosts([
+                ...posts,
                 newPost
             ]);
         } else {
@@ -105,12 +106,12 @@ export function PostsProvider({ children }: PostsProviderProps) {
         fetch('https://jsonplaceholder.typicode.com/posts')
             .then(response => response.json())
             .then(json => {
-                setData(json);
+                setPosts(json);
             })
     }, []);
 
     return (
-        <PostsContext.Provider value={{ data, createPost, createComment }}>
+        <PostsContext.Provider value={{ posts, createPost, createComment, comments }}>
             {children}
         </PostsContext.Provider>
     );

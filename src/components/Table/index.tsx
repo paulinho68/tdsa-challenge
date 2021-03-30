@@ -35,7 +35,7 @@ interface DataProps {
 export function TableComponent() {
     const [rows, setRows] = useState<DataProps[] | []>([]);
     const classes = useStyles();
-    const { data } = usePosts();
+    const { posts } = usePosts();
     const [open, setOpen] = useState(false);
     const [postOpenId, setPostOpenId] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -43,10 +43,10 @@ export function TableComponent() {
 
     const ChangeRowsPerPage = (min: number, max: number) => {
         const newData: DataProps[] = [];
-        if (!!data) {
+        if (!!posts) {
             for (let i = min; i <= max; i++) {
-                if (!!data[i - 1]) {
-                    newData.push(data[i - 1]);
+                if (!!posts[i - 1]) {
+                    newData.push(posts[i - 1]);
                 }
             }
 
@@ -70,7 +70,7 @@ export function TableComponent() {
 
     useEffect(() => {
         ChangeRowsPerPage(0, rowsPerPage);
-    }, [data, rowsPerPage]);
+    }, [posts, rowsPerPage]);
 
     return (
         <Styles.Container>
@@ -132,7 +132,7 @@ export function TableComponent() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={data.length}
+                    count={posts.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}
