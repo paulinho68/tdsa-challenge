@@ -1,10 +1,6 @@
 import * as Styles from './styles';
 import React, { useEffect, useState } from 'react';
 import {
-    Box,
-    Collapse,
-    IconButton,
-    Typography,
     Table,
     TableBody,
     TableCell,
@@ -13,10 +9,7 @@ import {
     TableRow,
     Paper,
     makeStyles,
-    TablePagination
 } from '@material-ui/core';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { usePosts } from '../../hooks/usePosts';
 
 const useStyles = makeStyles({

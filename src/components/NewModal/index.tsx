@@ -11,10 +11,11 @@ interface Props {
     isOpen: boolean;
     type: 'create' | 'edit';
     onRequestClose: () => void;
+    postId: number;
 }
 
 
-export function NewModal({ isOpen, onRequestClose, type }: Props) {
+export function NewModal({ isOpen, onRequestClose, type, postId }: Props) {
     const [continueWithModalOpen, setContinueWithModalOpen] = useState(false);
     const [showSecondForm, setShowSecondForm] = useState(false);
 
@@ -40,6 +41,7 @@ export function NewModal({ isOpen, onRequestClose, type }: Props) {
             <Styles.Container>
                 <h2>{type === 'create' ? 'Create Post' : 'Edit Post'}</h2>
                 <FormPost
+                    postId={postId}
                     Notify={Notify}
                     continueWithModalOpen={continueWithModalOpen}
                     onRequestClose={onRequestClose}

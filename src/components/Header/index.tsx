@@ -2,7 +2,7 @@ import logo from '../../assets/tdsa_logotipo.png';
 import * as Styles from './styles';
 
 interface Props {
-    onOpenNewModal: (type: 'create' | 'edit') => void;
+    onOpenNewModal: (type: 'create' | 'edit', id?: number) => void;
 }
 
 export function Header({ onOpenNewModal }: Props) {

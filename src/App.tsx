@@ -15,12 +15,18 @@ Modal.setAppElement('#root');
 
 export function App() {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
+  const [postId, setPostId] = useState(0);
   const [typeNewModal, setTypeNewModal] = useState<'create' | 'edit'>('create');
 
 
-  function handleOpenNewModal(type: 'create' | 'edit') {
+  function handleOpenNewModal(type: 'create' | 'edit', id?: number) {
     setTypeNewModal(type);
     setIsNewModalOpen(true);
+    if (!!id) {
+      setPostId(id);
+    } else {
+      setPostId(0);
+    }
   }
 
   function handleCloseNewModal() {
@@ -30,8 +36,8 @@ export function App() {
   return (
     <PostsProvider>
       <Header onOpenNewModal={handleOpenNewModal} />
-      <Dashboard />
-      <NewModal isOpen={isNewModalOpen} onRequestClose={handleCloseNewModal} type={typeNewModal} />
+      <Dashboard onOpenNewModal={handleOpenNewModal} />
+      <NewModal isOpen={isNewModalOpen} onRequestClose={handleCloseNewModal} type={typeNewModal} postId={postId} />
       <GlobalStyle />
     </PostsProvider>
   );

@@ -32,14 +32,19 @@ interface DataProps {
     body: string;
 }
 
-export function TableComponent() {
+interface Props {
+    onOpenNewModal: (type: 'create' | 'edit', id?: number) => void;
+}
+
+export function TableComponent({ onOpenNewModal }: Props) {
+    const { posts, deletePost } = usePosts();
+
     const [rows, setRows] = useState<DataProps[] | []>([]);
-    const classes = useStyles();
-    const { posts } = usePosts();
     const [open, setOpen] = useState(false);
     const [postOpenId, setPostOpenId] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
+    const classes = useStyles();
 
     const ChangeRowsPerPage = (min: number, max: number) => {
         const newData: DataProps[] = [];
@@ -113,8 +118,13 @@ export function TableComponent() {
                                                                 </Styles.SubColumn>
                                                                 <Styles.SubColumn>
                                                                     <div>
-                                                                        <button onClick={() => console.log(row.id)}>Editar</button>
-                                                                        <button onClick={() => console.log(row.id)}>Excluir</button>
+                                                                        <button onClick={() => onOpenNewModal('edit', row.id)}>Editar</button>
+                                                                        <button onClick={() => {
+                                                                            const bool = window.confirm("Do you really want to delete this post?");
+                                                                            if (bool) {
+                                                                                deletePost(row.id)
+                                                                            }
+                                                                        }}>Excluir</button>
                                                                     </div>
                                                                 </Styles.SubColumn>
                                                             </TableRow>

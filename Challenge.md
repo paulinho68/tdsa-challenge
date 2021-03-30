@@ -9,12 +9,12 @@ Para nos ajudar no processo de avaliação, preparamos uma orientação sobre a 
 - O de salvar irá fazer submit no form e fechar o modal. ✓
 - O de salvar e continuar ira salvar, limpar os campos e continuar no modal. ✓
 * O modal deve ter 2 forms, sendo o 1º o form principal e o 2º como form secundário. ✓
-- O 2º form deve ter os campos, uma tabela e um botão de inserir.
+- O 2º form deve ter os campos, uma tabela e um botão de inserir. ✓
 - Quando clicar no botão de inserir do segundo form, caso não esteja fazendo uma edição, o mesmo deverá salvar o 1º form e só então poderá salvar o 2º form. Caso esteja fazendo uma edição, poderá salvar normalmente. ✓
-- Para cada inserção do segundo form, os campos serão limpos e uma linha sera inserida na tabela.
-- Para poder inserir o 2º form, deve conter o ID do 1º form. Ou seja, quando estiver editando deverá conter o ID da edição e quando for inserção, deverá conter o ID retornado da API de inserção.
-- Ao salvar e continuar, deverá limpar todos os campos do primeiro form e do segundo form (a tabela também).
-- Ao fechar o modal, todos os dados que estavam no modal devem ser limpos para quando abrir o modal novamente vir zerado.
+- Para cada inserção do segundo form, os campos serão limpos e uma linha sera inserida na tabela. ✓
+- Para poder inserir o 2º form, deve conter o ID do 1º form. Ou seja, quando estiver editando deverá conter o ID da edição e quando for inserção, deverá conter o ID retornado da API de inserção. ✓
+- Ao salvar e continuar, deverá limpar todos os campos do primeiro form e do segundo form (a tabela também). ✓
+- Ao fechar o modal, todos os dados que estavam no modal devem ser limpos para quando abrir o modal novamente vir zerado. ✓
 
 Exemplo pratico com as API's do jsonplaceholder:
 
@@ -28,15 +28,15 @@ caso o usuário modifique o form do POST, será necessário chamar a API de edi�
 * O botão de salvar / salvar e continuar do modal irá submeter somente o 1º form (POST) e não irá influenciar o 2º form (COMMENTS).
 
 O que usar?
-* React, react hooks e react context;
-* Fetch (não utilizar Axios)
-* Javascript (Typescript é diferencial, não usamos no projeto)
-* MaterialUI
-* React-hook-form ou Formik
-* Redux (se necessário)
-* Styled-components ou SCSS
-* Fazer commits constantes, para cada feature
-* Teste automatizado (Jest + React Testing Library) (Não precisa cobrir o projeto com testes, mas faça alguns para poder avaliar seus conhecimentos)
+* React, react hooks e react context; ✓
+* Fetch (não utilizar Axios) ✓
+* Javascript (Typescript é diferencial, não usamos no projeto) ✓
+* MaterialUI ✓
+* React-hook-form ou Formik ✓
+* Redux (se necessário) X
+* Styled-components ou SCSS ✓
+* Fazer commits constantes, para cada feature ✓
+* Teste automatizado (Jest + React Testing Library) (Não precisa cobrir o projeto com testes, mas faça alguns para poder avaliar seus conhecimentos) X
 
 Diferenciais:
 * Conseguir fazer modificações nos componentes do MaterialUI com o makeStyle (não utilizar withStyle)

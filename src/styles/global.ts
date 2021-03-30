@@ -74,7 +74,7 @@ export const GlobalStyle = createGlobalStyle`
         padding: 3rem;
         position:relative;
         border-radius: 0.24rem;
-        max-height: 80vh;
+        max-height: 90vh;
         overflow-y: auto;
     }
 

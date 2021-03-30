@@ -6,25 +6,17 @@ import {
 } from 'formik';
 
 import { usePosts } from '../../hooks/usePosts';
+import { useEffect, useState } from 'react';
 
 interface Props {
     continueWithModalOpen: boolean;
     showSecondForm: boolean;
+    postId: number;
     setContinueWithModalOpen: (bool: boolean) => void;
     setShowSecondForm: (bool: boolean) => void;
     Notify: (msg: string, type: Noty.Type) => void;
     onRequestClose: () => void;
 }
-
-const initialValuesFirstForm = {
-    title: '',
-    body: ''
-}
-
-const firstSchema = Yup.object({
-    title: Yup.string().required('Title is required'),
-    body: Yup.string().required('Body is required'),
-});
 
 export function FormPost({
     Notify,
@@ -32,13 +24,26 @@ export function FormPost({
     showSecondForm,
     continueWithModalOpen,
     onRequestClose,
-    setContinueWithModalOpen
+    setContinueWithModalOpen,
+    postId
 }: Props) {
-    const { createPost } = usePosts();
+    const { createPost, posts, editPost } = usePosts();
+
+    const valuesFirstForm = {
+        title: !!posts.find(post => post.id === postId) ? posts.find(post => post.id === postId)?.title : '',
+        body: !!posts.find(post => post.id === postId) ? posts.find(post => post.id === postId)?.body : '',
+    }
+
+
+    const firstSchema = Yup.object({
+        title: Yup.string().required('Title is required'),
+        body: Yup.string().required('Body is required'),
+    });
 
     return (
         <Formik
-            initialValues={initialValuesFirstForm}
+            initialValues={valuesFirstForm}
+
             onSubmit={async (values, actions) => {
                 const isValid = await firstSchema.isValid(values);
 
@@ -52,7 +57,17 @@ export function FormPost({
                     return;
                 }
 
-                await createPost(values);
+                if (postId === 0) {
+                    await createPost({
+                        title: values.title ? values.title : '',
+                        body: values.body ? values.body : '',
+                    });
+                } else {
+                    await editPost({
+                        title: values.title ? values.title : '',
+                        body: values.body ? values.body : '',
+                    }, postId);
+                }
                 if (!continueWithModalOpen) {
                     onRequestClose();
                 } else {
@@ -67,7 +82,7 @@ export function FormPost({
                     type="text"
                     placeholder="Title*"
                     name="title"
-
+                    id="first_form_title"
                 />
                 <Field
                     type="text"
@@ -81,7 +96,7 @@ export function FormPost({
                     }}
                         type={!showSecondForm ? 'button' : 'submit'}
                     >
-                        {!showSecondForm ? 'Add comment' : 'Add new post'}
+                        {!showSecondForm ? 'Add comment' : (postId === 0 ? 'Add new post' : 'Edit post')}
                     </button>
                 </div>
                 {!showSecondForm ? (

@@ -24,6 +24,8 @@ interface PostContextData {
     posts: PostProps[];
     comments: CommentProps[];
     createPost: (post: PostInput) => Promise<void>;
+    editPost: (post: PostInput, id: number) => Promise<void>;
+    deletePost: (id: number) => Promise<void>;
     createComment: (comment: CommentInput) => Promise<void>;
 }
 
@@ -74,6 +76,19 @@ export function PostsProvider({ children }: PostsProviderProps) {
             Notify('Ops, should be have a problem with a server, please try again later.', 'error');
         }
     }
+    async function editPost(postInput: PostInput, id: number) {
+
+        const updatedPost = {
+            ...postInput,
+            userId: 1,
+            id
+        };
+        const newPosts = posts.filter(post => post.id !== id);
+        newPosts.push(updatedPost);
+
+        Notify('Post saved successfully.', 'success');
+        setPosts(newPosts);
+    }
 
     async function createComment(commentInput: CommentInput) {
 
@@ -102,6 +117,12 @@ export function PostsProvider({ children }: PostsProviderProps) {
         }
     }
 
+    async function deletePost(id: number) {
+        const newPosts = posts.filter(post => post.id !== id);
+        setPosts(newPosts);
+        Notify('Post delete successfully.', 'success');
+    }
+
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/posts')
             .then(response => response.json())
@@ -111,7 +132,14 @@ export function PostsProvider({ children }: PostsProviderProps) {
     }, []);
 
     return (
-        <PostsContext.Provider value={{ posts, createPost, createComment, comments }}>
+        <PostsContext.Provider value={{
+            posts,
+            comments,
+            createPost,
+            createComment,
+            editPost,
+            deletePost
+        }}>
             {children}
         </PostsContext.Provider>
     );

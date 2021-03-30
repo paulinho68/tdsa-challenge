@@ -87,6 +87,9 @@ export function FormComment({
                         placeholder="Body"
                         name="body"
                     />
+                    {!!comments.find(comment => comment.postId === posts[posts.length - 1].id) ? (
+                        <TableComment postId={posts[posts.length - 1].id} />
+                    ) : null}
                     <footer>
                         <button
                             className="close"
@@ -114,9 +117,6 @@ export function FormComment({
                     </footer>
                 </Form>
             </Formik>
-            {!!comments.find(comment => comment.postId === posts[posts.length - 1].id) ? (
-                <TableComment postId={posts[posts.length - 1].id} />
-            ) : null}
         </>
     )
 }
